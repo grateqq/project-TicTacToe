@@ -13,6 +13,10 @@ function playtwo(posicion) {
 board[posicion]=2
 
 }
+
+function playturn (turno,pos) {
+  board[pos] = turno
+}
 //ronda1
 
 
@@ -189,11 +193,80 @@ console.log(board);
 checkwin(board);
 } // 
 
-return {playone, playtwo, checkwin, resetboar,testwiner}
+function printBoard() {
+  console.log(board)
+}
+return {playone, playtwo, checkwin, resetboar,testwiner, printBoard, playturn}
 }) ()
-boardgame.playone (0)
-boardgame.playone (1)
-boardgame.playone (2)
+// boardgame.playone (0)
+// boardgame.playone (1)
+// boardgame.playone (2)
+// boardgame.checkwin()
+// boardgame.resetboar() 
+// boardgame.testwiner()
+
+// const btncero = document.getElementById("btn0");
+// btncero.addEventListener("click", ()=>{
+//   console.log("click 0")
+//   console.log(btncero.dataset.pos + "poss")
+//   console.log(btncero.dataset.mark + "mark")
+//   if (btncero.dataset.mark === "0") {
+//       console.log("consicion true")
+//       btncero.innerHTML = "1";
+//       btncero.dataset.mark = "1";
+//   } else {console.log("condicion false")}
+//     boardgame.playone (btncero.dataset.pos)
+// boardgame.printBoard()
+
+// })
+// console.log(btncero); // boton
+// console.log(btncero.dataset.pos) // 0 
+// boardgame.playone (btncero.dataset.pos)
+
+// btncero.innerHTML = "1"
+
 boardgame.checkwin()
-boardgame.resetboar() 
-boardgame.testwiner()
+
+// function (mark, poss) { 
+//   // Pone una en poss la mark
+// }
+ let turno = 1
+  function changeturn () {
+    if (turno === 1) {
+      turno = 2;
+    } else {turno = 1} 
+  }
+
+  function printmark (pos,mark) {
+    console.log("-DATA")
+    console.log(mark + " mark")
+    console.log(pos + " pos")
+          
+    boardgame.playturn(mark,pos)
+    boardgame.printBoard()
+    changeturn ()
+  }
+ printmark (0,turno)
+ printmark (1,turno)
+ printmark (2,turno)
+ printmark (3,turno)
+ printmark (4,turno)
+const btncero = document.getElementById("btn0");
+btncero.addEventListener("click", ()=>{
+ 
+  console.log("click 0")
+  console.log(btncero.dataset.pos + "poss")
+  console.log(btncero.dataset.mark + "mark")
+  if (btncero.dataset.mark === "0") {
+      console.log("consicion true")
+      btncero.innerHTML = "1";
+      btncero.dataset.mark = "1";
+  } else {console.log("condicion false")}
+    boardgame.playone (btncero.dataset.pos)
+boardgame.printBoard()
+
+})
+
+
+
+

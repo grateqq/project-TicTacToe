@@ -1,0 +1,13 @@
+.gamecontainer {
+  background-color: rgb(189, 196, 190);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+
+
+body {
+   background-color: rgb(41, 41, 41);
+}
