@@ -8,6 +8,7 @@ const gameconsole = (()=>{
   let board
   let players
   let turn
+  let score = [0,0]
     function inicio () {
         board = [0,0,0,0,0,0,0,0,0]
         // console.log(board)
@@ -21,7 +22,13 @@ const gameconsole = (()=>{
     }
     inicio ()
 
-    let score = [0,0]
+    function resetscore() {
+        inicio()
+        score = [0,0]
+        console.log("reset score "+ score)
+    }
+
+    
     
     function addscore () {
         score[turn] = score[turn]+1
@@ -120,7 +127,7 @@ const gameconsole = (()=>{
 
 
 
- return {play,masescore}
+ return {play,masescore,resetscore}
 
 
 })();
@@ -133,10 +140,9 @@ gameconsole.play(3);
 gameconsole.play(1);
 gameconsole.play(4);
 gameconsole.play(2);
-
+gameconsole.resetscore();
 gameconsole.play(0);
 gameconsole.play(3);
 gameconsole.play(1);
 gameconsole.play(4);
 gameconsole.play(2);
-;
