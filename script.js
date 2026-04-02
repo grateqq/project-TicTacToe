@@ -9,7 +9,7 @@ const gameconsole = (()=>{
         board.forEach((item, index, arr) => {
             arr[index] = "";
         });
-        console.log(board)
+        // console.log(board)
         
         players = [
             { name: "jugador1", mark: "X"},
@@ -18,11 +18,11 @@ const gameconsole = (()=>{
         
         turn = 0
         console.log("-----------inicio")
-        console.log(board)
+        // console.log(board)
         
     }
 
-    inicio ()
+    
 
     function resetscore() {
         inicio()
@@ -37,7 +37,7 @@ const gameconsole = (()=>{
         console.log(`score P1= ${score[0]} score P2= ${score[1]}`)
     } 
         
-    console.log(turn)
+    // console.log(turn)
 
     function changeturn() {
         if (turn === 0) { turn = 1;}
@@ -58,6 +58,7 @@ const gameconsole = (()=>{
                 console.log(`end game`);
                 addscore ()
                 inicio();
+                
         } 
         else if (board[3] === board[4] && board[3] === board[5] && board[3] === players[turn].mark ) {
             console.log(`win ${players[turn].name} segunda linea`);
@@ -100,9 +101,15 @@ const gameconsole = (()=>{
         else if (board[2] === board[4] && board[2] === board[6] && board[2] === players[turn].mark ) {
             console.log(`win ${players[turn].name} diagonal 246`);
             console.log(`end game`);
-            addscore ()
+            addscore ();
             inicio();
-        } else {
+        } 
+        // Empate
+        else if (board.every(cell => cell !== "")) {
+            console.log("EMPATE ---")
+            inicio();
+        }
+        else {
             changeturn()
             console.log("end turn --------------")
         }
@@ -113,9 +120,13 @@ const gameconsole = (()=>{
 
     function play(pos) {
         console.log ("Play " + players[turn].name + " " + players[turn].mark+ " en pos " + pos)
+        if (board[pos] === "") {
         board[pos] = players[turn].mark
         console.log(board)
         checkwinner()
+        gameprint.tablero()
+        }
+        else {console.log("lugar ocupado")}
         
     }
 
@@ -123,7 +134,7 @@ const gameconsole = (()=>{
 
 
 
- return {play,masescore,resetscore, board}
+ return {play,masescore,resetscore, board, inicio, players, score}
 
 
 })();
@@ -134,53 +145,82 @@ const gameconsole = (()=>{
 // gameconsole.play(3)
 // gameconsole.play(4)
 // gameconsole.play(5)
+const gameprint = (()=>{
+    function tablero() {
+    // console.log(table + " este no cambio")
+    
+        const gamecontainer = document.getElementById("gamecontainer");
 
-function printBoard() {
-  // console.log(table + " este no cambio")
- 
-  const gamecontainer = document.getElementById("gamecontainer");
+        gamecontainer.innerHTML = `
+        <div>
+            <button class="btn-xo" data-pos="0">${gameconsole.board[0]}</button>
+            <button class="btn-xo" data-pos="1">${gameconsole.board[1]}</button>
+            <button class="btn-xo" data-pos="2">${gameconsole.board[2]}</button>
+        </div>
 
-    gamecontainer.innerHTML = `
-    <div>
-        <button class="btn-xo" data-pos="0">${gameconsole.board[0]}</button>
-        <button class="btn-xo" data-pos="1">${gameconsole.board[1]}</button>
-        <button class="btn-xo" data-pos="2">${gameconsole.board[2]}</button>
-    </div>
+        <div>
+            <button class="btn-xo" data-pos="3">${gameconsole.board[3]}</button>
+            <button class="btn-xo" data-pos="4">${gameconsole.board[4]}</button>
+            <button class="btn-xo" data-pos="5">${gameconsole.board[5]}</button>
+        </div>
 
-    <div>
-        <button class="btn-xo" data-pos="3">${gameconsole.board[3]}</button>
-        <button class="btn-xo" data-pos="4">${gameconsole.board[4]}</button>
-        <button class="btn-xo" data-pos="5">${gameconsole.board[5]}</button>
-    </div>
+        <div>
+            <button class="btn-xo" data-pos="6">${gameconsole.board[6]}</button>
+            <button class="btn-xo" data-pos="7">${gameconsole.board[7]}</button>
+            <button class="btn-xo" data-pos="8">${gameconsole.board[8]}</button>
+        </div>
+    `
+        const buttonxo = document.querySelectorAll(".btn-xo");
+        buttonxo.forEach((button) => {
+            button.addEventListener("click", (event)=> {
+                gameconsole.play(button.dataset.pos);
+                gameprint.tablero()
+            })
+        })
+    }
 
-    <div>
-        <button class="btn-xo" data-pos="6">${gameconsole.board[6]}</button>
-        <button class="btn-xo" data-pos="7">${gameconsole.board[7]}</button>
-        <button class="btn-xo" data-pos="8">${gameconsole.board[8]}</button>
-    </div>
-  `
-  const buttonxo = document.querySelectorAll(".btn-xo");
-  buttonxo.forEach((button) => {
-    button.addEventListener("click", (event)=> {
-        gameconsole.play(button.dataset.pos);
-        printBoard()
+    function botones () {
+       const btncontainer = document.getElementById("game-btns");
+       btncontainer.innerHTML = `
+        <div>
+        <button id="reset">reset</button>
+        <button id="reset-point">reset point</button>
+        </div>
+       `
+       const btnreset = document.getElementById("reset")
+        btnreset.addEventListener("click", ()=>{
+            console.log("reset ------")
+            gameconsole.inicio ()
+            gameprint.tablero()
+       })
+    }//
 
-    })
-  })
-}
+    function puntajes() {
+        console.log(gameconsole.players)
+        console.log(gameconsole.score)
+        const puntos = document.getElementById("puntajes")
+        puntos.innerHTML = `
+            <div>
+                <p> ${gameconsole.players[0].name} mark : puntaje</p>
+                <p> pla</p>
+            </div>
+
+        `
+
+    }
+
+return {tablero, botones, puntajes}
+})()
+//end -----------
+
+gameconsole.inicio ()
+gameprint.tablero()
+gameprint.botones()
+gameprint.puntajes()
 
 
-printBoard()
-resetboard ()
 
 
-
-
-function resetboard () {
-  gameconsole.board.innerHTML =""
-  
-}
-console.clear()
 
 
 
