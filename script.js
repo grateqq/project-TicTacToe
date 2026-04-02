@@ -17,11 +17,19 @@ const gameconsole = (()=>{
         ];  
         
         turn = 0
+     
         console.log("-----------inicio")
         // console.log(board)
+        gameprint.puntajes()
         
     }
-
+    function infoplayers () {
+    return [
+        players[0],
+        players[1],
+        score
+    ]
+    }
     
 
     function resetscore() {
@@ -134,7 +142,7 @@ const gameconsole = (()=>{
 
 
 
- return {play,masescore,resetscore, board, inicio, players, score}
+ return {play,masescore,resetscore, board, inicio, players, score, infoplayers}
 
 
 })();
@@ -193,16 +201,34 @@ const gameprint = (()=>{
             gameconsole.inicio ()
             gameprint.tablero()
        })
+
+       const btnresetpoint = document.getElementById("reset-point")
+       btnresetpoint.addEventListener("click", ()=> {
+            console.log("reset points --------")
+            gameconsole.inicio ()
+            gameconsole.resetscore()
+            gameprint.tablero()
+            gameprint.botones()
+            gameprint.puntajes()
+            
+
+       // 
+       })
     }//
 
     function puntajes() {
-        console.log(gameconsole.players)
-        console.log(gameconsole.score)
+        const playersinfo = gameconsole.infoplayers()
+        // console.log(playersinfo)
+        // console.log(playersinfo[0])
+        //    console.log(playersinfo[1])
+        //       console.log(playersinfo[2])
+
+    //     console.log(gameconsole.score)
         const puntos = document.getElementById("puntajes")
         puntos.innerHTML = `
             <div>
-                <p> ${gameconsole.players[0].name} mark : puntaje</p>
-                <p> pla</p>
+                <p> ${playersinfo[0].name} mark: ${playersinfo[0].mark} puntaje:${playersinfo[2][0]}</p>
+                <p> ${playersinfo[1].name} mark: ${playersinfo[1].mark} puntaje:${playersinfo[2][1]}</p>
             </div>
 
         `
